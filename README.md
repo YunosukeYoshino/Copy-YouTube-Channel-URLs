@@ -5,7 +5,7 @@
 
 ## インストール手順
 1. `bun install` を実行して TypeScript、Vitest、Chrome API 型定義などの依存を導入します。
-2. `bun run build` で `src/` 以下を TypeScript コンパイラ（`tsc`）で `dist/` に変換します。
+2. `bun run build` で `src/` 以下を `esbuild` でバンドルして `dist/` の単一ファイルに出力します（サービスワーカー/コンテントスクリプト向け）。
 3. Chrome（または Chromium 系ブラウザ）で `chrome://extensions` に移動します。
 4. **デベロッパーモード** を有効化し、**パッケージ化されていない拡張機能を読み込む** をクリックします。
 5. プロジェクトルートを選択し、`manifest.json`、`dist/`、`popup/` といったファイルを読み込ませます。
@@ -23,13 +23,14 @@
 ## 利用ライブラリ・ツール
 - **TypeScript**：コード全体を型付きで記述し、`tsc`（ES2020 ターゲット）でビルドします。
 - **Chrome Extensions API**：`tabs`/`scripting`/`clipboardWrite`/`runtime` を使ってポップアップ・バックグラウンド・コンテント間の通信/クリップボード操作を行います。
+- **esbuild**：`src/` を単一ファイル（IIFE）にバンドルして、Service Worker やコンテントスクリプトが `import`/`export` を含まずに Chrome に読み込めるようにします。
 - **Vitest**：`tests/unit/videoCollector.test.ts` で DOM 解析ロジックを Node 環境で検証するために利用。
 - **happy-dom**：Vitest のテスト環境として DOM ツリーを擬似的に提供し、`document`/`window` を安全に使えるようにする。
 - **@types/chrome**：TypeScript 上で Chrome API への型サポートを提供。
 
 ## テスト
 - 単体テスト：`bun run test`（Vitest）
-- ビルド：`bun run build`（TypeScript）
+- ビルド：`bun run build`（esbuild でバンドル）
 - リント：`bun run lint`（`tsc --noEmit`）
 
 ## 注意事項

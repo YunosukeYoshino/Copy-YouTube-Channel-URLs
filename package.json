@@ -4,13 +4,17 @@
   "description": "Chrome extension that copies visible YouTube channel video URLs to the clipboard.",
   "type": "module",
   "scripts": {
-    "build": "tsc",
+    "build:background": "esbuild src/background/index.ts --bundle --platform=browser --format=iife --outfile=dist/background.js --sourcemap",
+    "build:content": "esbuild src/contentScript.ts --bundle --platform=browser --format=iife --outfile=dist/contentScript.js --sourcemap",
+    "build:popup": "esbuild src/popup/index.ts --bundle --platform=browser --format=iife --outfile=dist/popup.js --sourcemap",
+    "build": "bun run build:background && bun run build:content && bun run build:popup",
     "watch": "tsc --watch",
     "lint": "tsc --noEmit",
     "test": "vitest run"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.200",
+    "esbuild": "^0.27.0",
     "happy-dom": "^20.0.10",
     "typescript": "^5.5.6",
     "vitest": "^1.4.5"
