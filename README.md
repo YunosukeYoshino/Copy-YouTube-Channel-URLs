@@ -33,6 +33,9 @@
 - ビルド：`bun run build`（esbuild でバンドル）
 - リント：`bun run lint`（`tsc --noEmit`）
 
+-## アイコン
+-`src/logo.png` を拡張機能アイコンとアクションに使います。必要に応じて16/48/128ピクセルの PNG をこのパスへ上書きすると、manifest の `icons` と `action.default_icon` に反映されます。
+
 ## 注意事項
 - クリップボード書き込みはユーザーの許可が必要です。Chrome によってブロックされた場合、ポップアップに権限を付与する方法が表示されます。
 - すべてのコピー処理は `chrome.runtime.sendMessage` で軽量ログを送信するので、後続のテレメトリ拡張や分析に用意できます。

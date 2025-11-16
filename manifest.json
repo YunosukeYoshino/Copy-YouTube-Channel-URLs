@@ -15,8 +15,18 @@
       "run_at": "document_idle"
     }
   ],
+  "icons": {
+    "16": "src/logo.png",
+    "48": "src/logo.png",
+    "128": "src/logo.png"
+  },
   "action": {
     "default_popup": "popup/popup.html",
-    "default_title": "Copy YouTube Channel URLs"
+    "default_title": "Copy YouTube Channel URLs",
+    "default_icon": {
+      "16": "src/logo.png",
+      "48": "src/logo.png",
+      "128": "src/logo.png"
+    }
   }
 }
