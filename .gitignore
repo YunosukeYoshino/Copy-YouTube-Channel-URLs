@@ -1,0 +1,29 @@
+# Node/TypeScript build artifacts
+node_modules/
+dist/
+build/
+coverage/
+.cache/
+*.log
+*.tmp
+*.tsbuildinfo
+
+# Environment files
+.env*
+
+# IDE/editor
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# OS
+*.swp
+*~
+
+# Chrome extension packaging
+*.zip
+yarn-error.log
+npm-debug.log
+pnpm-lock.yaml
+package-lock.json

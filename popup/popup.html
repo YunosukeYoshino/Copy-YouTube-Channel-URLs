@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Copy Channel URLs</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      min-width: 320px;
+      padding: 16px;
+      color: #0f0f0f;
+      background: #fefefe;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    button {
+      padding: 10px 14px;
+      border: none;
+      border-radius: 6px;
+      background-color: #ff0000;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    #status {
+      font-size: 0.9rem;
+      min-height: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Copy Channel URLs</h1>
+    <p id="status">Ready to copy the videos that are visible on this channel.</p>
+    <button id="copy-button">Copy visible video URLs</button>
+  </div>
+  <script type="module" src="../dist/popup.js"></script>
+</body>
+</html>
