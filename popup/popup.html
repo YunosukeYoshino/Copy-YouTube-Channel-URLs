@@ -20,6 +20,70 @@
       gap: 8px;
     }
 
+    .snapshot-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: #555;
+    }
+
+    .video-list {
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      padding: 8px;
+      max-height: 240px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      background: #fff;
+    }
+
+    .video-list.loading {
+      opacity: 0.6;
+    }
+
+    .video-entry {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 4px 0;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 0.85rem;
+    }
+
+    .video-entry:last-child {
+      border-bottom: none;
+    }
+
+    .video-entry input[type="checkbox"] {
+      margin-top: 4px;
+    }
+
+    .entry-meta {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .entry-title {
+      font-weight: 600;
+      color: #0f0f0f;
+    }
+
+    .entry-url {
+      font-size: 0.75rem;
+      color: #555;
+      word-break: break-all;
+    }
+
+    .select-all {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 600;
+    }
+
     button {
       padding: 10px 14px;
       border: none;
@@ -45,7 +109,15 @@
   <div class="container">
     <h1>Copy Channel URLs</h1>
     <p id="status">Ready to copy the videos that are visible on this channel.</p>
-    <button id="copy-button">Copy visible video URLs</button>
+    <div id="snapshot-info" class="snapshot-info">
+      <label class="select-all">
+        <input type="checkbox" id="select-all" checked />
+        <span>すべて選択</span>
+      </label>
+      <span id="snapshot-timestamp"></span>
+    </div>
+    <div id="video-list" class="video-list"></div>
+    <button id="copy-button">Copy selected video URLs</button>
   </div>
   <script type="module" src="../dist/popup.js"></script>
 </body>

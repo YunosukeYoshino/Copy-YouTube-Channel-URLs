@@ -1,8 +1,11 @@
 import type { CopyLogMessage } from "../shared/messages";
 
 export function recordCopyEvent(payload: CopyLogMessage): void {
-  // Keeping a short-lived log for debugging; no persistence is required for the MVP.
-  console.info("Copy event", payload);
+  // Keep a short-lived log for debugging and selection counts.
+  console.info("Copy event", {
+    ...payload,
+    selectedCount: payload.selectedUrls?.length
+  });
 
   if (chrome?.storage?.local) {
     chrome.storage.local.set({ lastCopyEvent: { ...payload, timestamp: Date.now() } }, () => {

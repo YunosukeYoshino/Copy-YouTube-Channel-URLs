@@ -1,0 +1,62 @@
+openapi: 3.0.3
+info:
+  title: Runtime Messaging Contract
+  version: 1.0.0
+paths: {}
+components:
+  schemas:
+    CollectVideosMessage:
+      type: object
+      required:
+        - type
+      properties:
+        type:
+          type: string
+          enum: [collectVideos]
+    SelectionSnapshotResponse:
+      type: object
+      required: [status, timestamp]
+      properties:
+        status:
+          type: string
+          enum: [success, noChannel, noVideos, error]
+        timestamp:
+          type: string
+          format: date-time
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/VideoEntry'
+        reason:
+          type: string
+        totalCandidates:
+          type: integer
+    VideoEntry:
+      type: object
+      required: [title, watchUrl, selected]
+      properties:
+        title:
+          type: string
+        watchUrl:
+          type: string
+          format: uri
+        channelName:
+          type: string
+        selected:
+          type: boolean
+        index:
+          type: integer
+    CopyLogMessage:
+      type: object
+      required: [type, urlCount, status]
+      properties:
+        type:
+          type: string
+          enum: [logCopy]
+        urlCount:
+          type: integer
+        status:
+          type: string
+          enum: [success, warning, failure]
+        reason:
+          type: string
