@@ -1,50 +1,38 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# Copy YouTube Channel URLs Constitution
+<!--
+Sync Impact Report
+Version change: 0.0.0 → 1.0.0
+Modified principles: None previously defined → Value-First Delivery; Spec-First Planning; Test-First Assurance; Chrome Manifest Discipline; Observability & Maintainability.
+Added sections: Operational Guardrails; Development Workflow & Quality Gates.
+Removed sections: None.
+Templates requiring updates: ✅ .specify/templates/plan-template.md (guidance already generic); ✅ .specify/templates/spec-template.md (no constitution references); ✅ .specify/templates/tasks-template.md (framework agnostic); ⚠ README.md (updated to highlight esbuild bundling and Bun commands).
+Follow-up TODOs: None.
+-->
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### Value-First Delivery
+Every initiative must tie to a measurable user outcome (copying visible YouTube channel video URLs in minutes, reducing manual clicks, or clarifying failure states). Value-First Delivery boundaries: features that cannot show clear clipboard/UX payoff remain deferred, and every change request describes the user pain, desired outcome, and how success will be observed.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### Spec-First Planning
+Before any code is written, the team crafts or updates the specification (`specs/[###-feature-name]/spec.md`) describing user scenarios, acceptance criteria, and assumptions. Specifications become the contract for testing and implementation; deviations must be documented, reviewed with the product owner, and added back to the spec before code merges.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### Test-First Assurance
+Every story begins with at least one automated test (unit, DOM parsing, or contract) that fails under the new behavior, followed by implementation and then verification. Regression tests must cover the clipboard copy workflow and any guardrails (non-channel pages, missing thumbnails) before merging; manual testing notes (documentation in `docs/manual-testing.md`) complete the validation cycle.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### Chrome Manifest Discipline
+Chrome/V3 constraints are treated as non-negotiable requirements: bundles must be produced as single Service Worker and content script files (no stray `export` statements), permissions must be scoped to needed YouTube hosts, and the manifest/content script declarations must always match the files emitted by the bundler. Build scripts (currently esbuild tasks) always run before packaging or manual testing.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### Observability & Maintainability
+Every clipboard copy event, permission failure, or non-channel context generates lightweight logs accessible via `chrome.runtime` messaging; these logs inform future improvements without depending on third-party telemetry. Code stays within the TypeScript/Bun toolchain, README/manual tests capture developer steps, and addition of new tooling or dependencies first passes through this constitution to ensure maintainability.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Operational Guardrails
+Bundles always originate from the `src/` hierarchy and are emitted via `bun run build` (esbuild bundling). The project ignores `dist/`, local keys, or packaged archives and keeps dependencies limited to Chrome APIs, TypeScript, Bun, and supporting test tooling. Any new permission request is justified in the spec, and security/performance impacts are outlined before the manifest changes.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
-
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Development Workflow & Quality Gates
+Work proceeds from specification → plan → tasks → implementation. Documentation updates (`docs/manual-testing.md`, README) accompany new flows. Tasks follow the existing phase structure (Setup → Foundation → User Stories → Polish) with explicit checklists; build and lint scripts run before releases, and packaging adheres to Manifest V3 via bundled, module-free artifacts. PR reviewers verify compliance with this constitution, confirm required tests exist, and signal blockers for imagery, permissions, or observability gaps.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+This constitution supersedes other project guidance when conflicts arise. Amendments require an updated document, a rationale recorded in the Sync Impact Report, and confirmation from at least one peer reviewer before merging. Changes are tracked via semantic versioning; the constitution is reviewed quarterly or whenever Chrome platform requirements shift, and all PRs must reference the current version.
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
-
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2025-11-16 | **Last Amended**: 2025-11-16
