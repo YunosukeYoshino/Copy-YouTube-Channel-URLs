@@ -3,7 +3,7 @@
   "name": "Copy YouTube Channel URLs",
   "version": "0.1.0",
   "description": "Copy visible YouTube channel videos to the clipboard with a single click.",
-  "permissions": ["activeTab", "scripting", "clipboardWrite", "tabs"],
+  "permissions": ["activeTab", "clipboardWrite"],
   "host_permissions": ["https://www.youtube.com/*"],
   "background": {
     "service_worker": "dist/background.js"
