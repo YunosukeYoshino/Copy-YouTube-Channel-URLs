@@ -1,38 +1,119 @@
+<!-- prettier-ignore -->
+<div align="center">
+
+<img src="src/logo.png" alt="Copy YouTube Channel URLs logo" height="80" />
+
 # Copy YouTube Channel URLs
 
-## 概要
-このChrome拡張機能は、現在表示中のYouTubeチャンネルページから各動画のタイトルとURLを抽出し、ポップアップでチェックリストとして表示します。ユーザーが選んだ動画だけをクリップボードに書き込めるため、不要なURLを避けつつ、成功／失敗状態を即座に通知できます。
+[![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-4285F4?style=flat-square&logo=googlechrome&logoColor=white)](https://chrome.google.com)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.5-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Manifest V3](https://img.shields.io/badge/Manifest-V3-FF6F00?style=flat-square)](https://developer.chrome.com/docs/extensions/mv3)
+[![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
 
-## インストール手順
-1. `bun install` を実行して TypeScript、Vitest、Chrome API 型定義などの依存を導入します。
-2. `bun run build` で `src/` 以下を `esbuild` でバンドルして `dist/` の単一ファイルに出力します（サービスワーカー/コンテントスクリプト向け）。
-3. Chrome（または Chromium 系ブラウザ）で `chrome://extensions` に移動します。
-4. **デベロッパーモード** を有効化し、**パッケージ化されていない拡張機能を読み込む** をクリックします。
-5. プロジェクトルートを選択し、`manifest.json`、`dist/`、`popup/` といったファイルを読み込ませます。
+**YouTubeチャンネルの動画URLをワンクリックでクリップボードへ**
 
-## 使い方
-1. 動画が一覧表示される YouTube チャンネルページ（グリッド/リスト問わず）を開きます。
-2. 拡張機能アイコンをクリックし、ポップアップにタイトルとURLのチェックリストを確認します（すべて選択済み状態で表示されます）。
-3. 選択を解除したい動画はチェックを外し、必要なURLだけを残した状態で **「Copy selected video URLs」** をクリックすると、選択中のURLだけが改行区切りでクリップボードに保存されます。
-4. チェックリストの最上部にある「すべて選択」で全選択・全解除ができます。スクロールで追加動画が読み込まれたら再度ポップアップを開き、リストの新しい項目を調整してからコピーしてください。
-5. 非チャンネルページや動画が読み込まれていない場合は、ポップアップに理由が表示され、コピー動作が無効化されます。
+[Features](#features) • [Installation](#installation) • [Usage](#usage) • [Development](#development)
 
-## 利用ライブラリ・ツール
-- **TypeScript**：コード全体を型付きで記述し、`tsc`（ES2020 ターゲット）でビルドします。
-- **Chrome Extensions API**：`tabs`/`scripting`/`clipboardWrite`/`runtime` を使ってポップアップ・バックグラウンド・コンテント間の通信/クリップボード操作を行います。
-- **esbuild**：`src/` を単一ファイル（IIFE）にバンドルして、Service Worker やコンテントスクリプトが `import`/`export` を含まずに Chrome に読み込めるようにします。
-- **Vitest**：`tests/unit/videoCollector.test.ts` で DOM 解析ロジックを Node 環境で検証するために利用。
-- **happy-dom**：Vitest のテスト環境として DOM ツリーを擬似的に提供し、`document`/`window` を安全に使えるようにする。
-- **@types/chrome**：TypeScript 上で Chrome API への型サポートを提供。
+</div>
 
-## テスト
-- 単体テスト：`bun run test`（Vitest）
-- ビルド：`bun run build`（esbuild でバンドル）
-- リント：`bun run lint`（`tsc --noEmit`）
+---
 
-## アイコン
-`src/logo.png` を拡張機能アイコンとアクションに使います。必要に応じて16/48/128ピクセルの PNG をこのパスへ上書きすると、manifest の `icons` と `action.default_icon` に反映されます。
+YouTubeチャンネルページに表示されている動画のURLを、選択して一括コピーできるChrome拡張機能です。動画リストの整理やシェア、外部ツールへのエクスポートに最適です。
 
-## 注意事項
-- クリップボード書き込みはユーザーの許可が必要です。Chrome によってブロックされた場合、ポップアップに権限を付与する方法が表示されます。
-- すべてのコピー処理は `chrome.runtime.sendMessage` で軽量ログを送信するので、後続のテレメトリ拡張や分析に用意できます。
+## Features
+
+- 🎯 **選択コピー** — チェックボックスで必要な動画だけを選んでコピー
+- ⚡ **ワンクリック操作** — ポップアップから即座にクリップボードへ
+- 📋 **重複排除** — 同じURLが複数回コピーされることを防止
+- 🔄 **無限スクロール対応** — スクロール後も再取得して最新の動画リストを反映
+- 🛡️ **Manifest V3** — 最新のChrome拡張機能仕様に準拠
+
+## Installation
+
+### Chrome Web Storeから（準備中）
+
+> [!NOTE]
+> 現在審査中です。公開後にリンクを追加します。
+
+### 開発版をインストール
+
+```bash
+# リポジトリをクローン
+git clone https://github.com/YunosukeYoshino/Copy-YouTube-Channel-URLs.git
+cd Copy-YouTube-Channel-URLs
+
+# 依存関係をインストール
+bun install
+
+# ビルド
+bun run build
+```
+
+1. Chromeで `chrome://extensions` を開く
+2. **デベロッパーモード** を有効化
+3. **パッケージ化されていない拡張機能を読み込む** をクリック
+4. クローンしたプロジェクトフォルダを選択
+
+## Usage
+
+1. YouTubeチャンネルの動画一覧ページを開く
+2. ツールバーの拡張機能アイコンをクリック
+3. コピーしたい動画をチェック（デフォルトは全選択）
+4. **「Copy selected video URLs」** をクリック
+
+> [!TIP]
+> 無限スクロールで追加読み込みされた動画を取得するには、スクロール後にポップアップを再度開いてください。
+
+### 対応ページ
+
+- チャンネルの「動画」タブ
+- チャンネルホーム（動画グリッド表示）
+
+> [!WARNING]
+> 再生リストページや検索結果など、チャンネル以外のページでは動作しません。
+
+## Development
+
+### Prerequisites
+
+- [Bun](https://bun.sh/) (推奨) または Node.js 20+
+- Chrome / Chromium系ブラウザ
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `bun install` | 依存関係のインストール |
+| `bun run build` | プロダクションビルド |
+| `bun run lint` | TypeScript型チェック |
+| `bun run test` | ユニットテスト実行 |
+
+### Project Structure
+
+```
+src/
+├── background/       # Service Worker
+├── content/          # コンテンツスクリプト（DOM解析）
+├── popup/            # ポップアップUI
+└── shared/           # 共通型定義・メッセージ
+```
+
+### Tech Stack
+
+| Technology | Purpose |
+|------------|---------|
+| TypeScript | 型安全な開発 |
+| esbuild | 高速バンドル |
+| Vitest | ユニットテスト |
+| Chrome Extensions API | ブラウザ連携 |
+
+## Resources
+
+- [Chrome Extensions Documentation](https://developer.chrome.com/docs/extensions)
+- [Manifest V3 Migration Guide](https://developer.chrome.com/docs/extensions/mv3/intro)
+
+---
+
+<div align="center">
+  <sub>Built with ❤️ for YouTube power users</sub>
+</div>
