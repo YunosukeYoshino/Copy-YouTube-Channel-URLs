@@ -30,10 +30,10 @@ YouTubeチャンネルページに表示されている動画のURLを、選択�
 
 ## Installation
 
-### Chrome Web Storeから（準備中）
+### Chrome Web Storeから
 
 > [!NOTE]
-> 現在審査中です。公開後にリンクを追加します。
+> [リンクはこちら](https://chromewebstore.google.com/detail/copy-youtube-channel-urls/ignonockihifnaniloogifchommgijbb?hl=ja)
 
 ### 開発版をインストール
 
