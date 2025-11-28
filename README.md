@@ -114,6 +114,3 @@ src/
 
 ---
 
-<div align="center">
-  <sub>Built with ❤️ for YouTube power users</sub>
-</div>
